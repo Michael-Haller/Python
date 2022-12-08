@@ -12,4 +12,41 @@
   # Lists: mutable data structure that holds collection of elements, append() = adds to list, pop() = removes last item in list
   # index positions and slicing: index of any word is -1 of len, [1:3] - never pulls the last number,left side: starts with 0 when counting, going backwards: start with -1
   # Dictionary an unordered collection of key-values pairs {}, dictionary_name{key being added: value being added, etc}, pop(key) = returns value but also removes pair from dictionary, dictionary.Values(shows values in your dictionary)
-  # 
+  
+  
+  
+#Series - One Dimensional Array
+
+    # Series object from a python list
+    
+    ice_cream = ["Chocolate", "Vanilla", "Strawberry", "Rum Raisin"]
+    
+    # Series is a class which is a blueprint for an obeject
+    
+    pd.Series(ice_cream)
+    
+    # produces list with index along with "dtype: object"
+      
+    lottery = [4, 8, 15, 16, 23, 42]
+    pd.Series(lottery)
+    
+    # produces same list but difference is dtype now says int64 (64 is the bytes in your computer
+    
+    registrations = [True, False, False, False, True]
+    pd.Series(registrations
+    
+        
+    
+    #Series object from a python dictionary
+  
+    sushi = {
+      "Salmon": "Orange",
+      "Tuna": "Red",
+      "Eel": "Brown"
+    }
+
+    pd.Series(sushi)
+    
+    # produces dictionary with no index, but has dtype 
+    
+    
