@@ -13,7 +13,8 @@
   # index positions and slicing: index of any word is -1 of len, [1:3] - never pulls the last number,left side: starts with 0 when counting, going backwards: start with -1
   # Dictionary an unordered collection of key-values pairs {}, dictionary_name{key being added: value being added, etc}, pop(key) = returns value but also removes pair from dictionary, dictionary.Values(shows values in your dictionary)
   
-  
+
+############SECTION 1
   
 #Series - One Dimensional Array
 
@@ -617,6 +618,14 @@
     
     
     
+    
+############SECTION 2
+
+# Dataframe - Has ROWS and columns. Needs two points for reference
+
+
+    nba = pd.read_csv("nba.csv")
+
     
     
     
