@@ -6,3 +6,5 @@
   # None = special datatype (ex: when you have 3 rows and the second one is blank)
   # Operators (PEMDAS) +,*,/,-,% (remainder), //(round down division), == (Boolean), !=
   # Var= Subject to change (age = 29)
+  #Built in Functions (EX: str(),int(),type(), etc.)
+  
