@@ -625,6 +625,8 @@
 
 
     nba = pd.read_csv("nba.csv")
+    # Methods and Attributes between Series and Dataframes
+    
 
     
     
