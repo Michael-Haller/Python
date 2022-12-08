@@ -411,4 +411,60 @@
          super_high_calorie = 400 in coffee.values
          
          
-         
+# Extract Series Values by Index Position and Label
+
+    pokemon = pd.read_csv("pokemon", index_col = ["Pokemon"]).squeeze()
+    pokemon.head()
+    
+    # Return multiple items from the list
+    pokemon[(100, 200, 300)]
+    
+    #27 would be INCLUDED while 35 is EXCLUDED
+    pokemon[(27:35)]
+    
+    # Pull a label
+    pokemon["Mewtwo"]
+    pokemon[("Mewtwo", "Jolteon", "Meowth")]
+        
+        
+    # Excercise 16
+    
+        import pandas as pd
+
+        # I have a dictionary that maps guitar types to their colors
+        guitars_dict = {
+        "Fender Telecaster": "Baby Blue",
+        "Gibson Les Paul": "Sunburst",
+        "ESP Eclipse": "Dark Green"
+        }
+
+        # Create a new Series object, passing in the guitars_dict dictionary as the data source.
+        # Assign the resulting Series to a "guitars" variable.
+
+        guitars = pd.Series(guitars_dict)
+
+        # Access the value for the index position of 0 within the "guitars" Series.
+        # Assign the value to a "fender_color" variable.
+
+        fender_color = guitars[0]
+
+        # Access the value for the index label of "Gibson Les Paul" in the "guitars" Series.
+        # Assign the value to a "gibson_color" variable.
+
+        gibson_color = guitars["Gibson Les Paul"]
+
+        # Access the value for the index label of "ESP Eclipse" in the "guitars" Series.
+        # Assign the value to a "esp_color" variable.
+
+        esp_color = guitars["ESP Eclipse"]
+        
+     
+    
+    
+# Get Method, Overwrite a Series Value, Copy Method, the Inplace Parameter, Math Methods on Series objects
+# Broadcasting, Use the value_counts Method to see Unique values within a series
+
+    #
+
+
+
