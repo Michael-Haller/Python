@@ -325,14 +325,81 @@
         
      
      
- # The sort_index Method
+# The sort_index Method
      
-     # Same as before but with an index
-     pd.read_csv("pokemon", index_col = "Pokemon").squeeze()
-     pokemon.sort_index()
+    # Same as before but with an index
+    pd.read_csv("pokemon", index_col = "Pokemon").squeeze()
+    pokemon.sort_index()
  
+        
+    # Excercise 14
+    
+    
+        # If you see a test failure when checking your solution,
+        # note that [left] refers to YOUR code while [right]
+        # refers to the correct code that the computer is comparing
+        # to your work
+         
+        import pandas as pd
+
+        # Below, we have a list of delicious drink flavors
+        # We create a sorted Series of strings and assign it to a 'gatorade' variable
+         
+        flavors = ["Red", "Blue", "Green", "Orange"]
+        gatorade = pd.Series(flavors).sort_values()
+
+        # I'd like to return the Series to its original order        
+        # (sorted by the numeric index in ascending order). 
+        # Sort the gatorade Series by index
+        # Assign the result to an 'original' variable.
+
+        original = gatorade.sort_index(ascending = True)
+        
         
         
     
+ # Check for inclusion with Python's Keywords
+  
+     
+     pokemon = pd.read_csv("pokemon", index_col = ["Pokemon"]).squeeze()
+     pokemon.head()
+     
+     # pds doesn't look in index
+     "Pikachu" in pokemon.values
+     # Returns True
+     
+     # Excercise 15
+    
+    
+         # If you see a test failure when checking your solution,
+         # note that [left] refers to YOUR code while [right]
+         # refers to the correct code that the computer is comparing
+         # to your work
+         
+         import pandas as pd
 
+         # This challenge includes a coffee.csv with 2 columns: 
+         # Coffee and Calories. Import the CSV. Assign the Coffee
+         # column to be the index and the Calories column to be the
+         # Series' values. Assign the Series to a 'coffee' variable.
+
+
+         # Check whether the coffee 'Flat White' is present in the data.
+         # Assign the result to a `flat_white` variable
+
+
+         # Check whether the coffee 'Cortado' is present in the data.
+         # Assign the result to a `cortado` variable
+
+
+         # Check whether the coffee 'Blackberry Mocha' is present in the data.
+         # Assign the result to a `blackberry_mocha` variable
+
+
+         # Check whether the value 221 is present in the data.
+         # Assign the result to a 'high_calorie' variable.
+
+
+         # Check whether the value 400 is present in the data.
+         # Assign the result to a 'super_high_calorie' variable.
 
