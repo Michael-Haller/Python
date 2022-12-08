@@ -129,5 +129,210 @@
          # to the average_home_runs variable below
          
          average_home_runs = home_runs.mean()
+   
+   
+   
+# Parameters & Arguements
     
+    # Paramter - The name we give to an expected input
+    # Arguement - The concrete value that we provide to a parameter
+    # Video Game Difficulty - Easy, Medium, Hard : Parameter = Difficulty, Arguement = Easy, Medium, Hard
+    
+    fruits = ["Apples", "Orange", "Plum", "Grape", "Blueberry")
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Fridays"]
+    
+    # Puts a list but instead of numbers in a list, it's now the weekdays. So it will say Monday Apple in the first line
+    # Position is below while Key is data and index
+    pd.Series(fruits, weekdays)
+    
+    # These below produce the same list because the data and index are associated in pd
+    pd.Series(data = fruits, index = weekdays)
+    pd.Series(index = weekdays, data = fruits)
+    pd.Series(fruits, index = weekdays)
+    
+    # Can have duplicate labels
+    
+    # Excercise 10 
+    
+        # If you see a test failure when checking your solution,
+        # note that [left] refers to YOUR code while [right]
+        # refers to the correct code that the computer is comparing
+        # to your work
+
+        # The code below defines a list of delicious foods
+        # and some dipping sauces to dip them in
+        import pandas as pd
+
+        foods = ["French Fries", "Chicken Nuggets", "Celery", "Carrots"]
+        dipping_sauces = ["BBQ", "Honey Mustard", "Ranch", "Sriracha"]
+
+        # Create a Series and assign it to the s1 variable below. 
+        # Assign the foods list as the data source
+        # and the dipping_sauces list as the Series index 
+        # For this solution, use positional arguments (i.e. feed in the arguments sequentially)
+        
+        s1 = pd.Series(foods, dipping_sauces)
+        
+        # Create a Series and assign it to the s2 variable below. 
+        # Assign the dipping_sauces list as the data source
+        # and the foods list as the Series index 
+        # For this solution, use keyword arguments (i.e. provide the parameter names
+        # alongside the arguments)
+        s2 = pd.Series(data = dipping_sauces, index = foods)
+
+
+
+
+# Import Series with the pd.read_csv Function
+    
+    # NOTE - Save the file in the same place or you need to create path
+    #Running the below creates a dataframe which is pds = of a table
+    pd.read_csv("pokemon.csv")
+    
+    # Moving this into a Series object
+    # usecols = which column you want
+    # squeeze = moves it from a dataframe into a series obj
+    pokemon = pd.read_csv("pokemon.csv", usecols = ["Pokemon"]).squeeze("columns")
+    pokemon
+    
+    # Google Stock Price
+    google = pd.read_csv("google_stock_price.csv", usecols = ["Stock Price"]).squeeze("columns")
+    google
+    
+    
+    # Excercise 11
+    
+    
+        # If you see a test failure when checking your solution,
+        # note that [left] refers to YOUR code while [right]
+        # refers to the correct code that the computer is comparing
+        # to your work
+
+        import pandas as pd
+
+        # We have a foods.csv CSV file with 3 columns: Item Number, Menu Item, Price
+        # You can explore the data by clicking into the foods.csv file on the left
+        # Import the CSV file into a pandas Series object
+        # The Series should have the standard pandas numeric index
+        # The Series values should be the string values from the "Menu Item" column
+        # Assign the Series object to a "foods" variable
+        
+        foods = pd.read_csv("foods.csv", usecols = ["Menu Item"]).squeeze("columns")
+ 
+ 
+ 
+ # Head and Tail Methods
+
+    # Both return a specified number of rows from a series
+    
+    google = pd.read_csv("google_stock_price.csv", usecols = ["Stock Price"]).squeeze("columns")
+    pokemon = pd.read_csv("pokemon.csv", usecols = ["Pokemon"]).squeeze("columns")
+    
+    # Heads returns first 5 rows
+    pokemon.head()
+    pokemon.head(5)
+    pokemon.head(n = 5)
+
+    # Tail returns first 5 rows
+    pokemon.tail()
+    pokemon.tail(5)
+    pokemon.tail(n = 5)
+    
+    # Excercise 12
+    
+    
+        # If you see a test failure when checking your solution,
+        # note that [left] refers to YOUR code while [right]
+        # refers to the correct code that the computer is comparing
+        # to your work
+
+        import pandas as pd
+
+        # We have a roller_coasters.csv CSV file with 4 columns: Name, Park, Country, and Height.
+        # You can explore the data by clicking into the CSV file on the left
+        # Import the CSV file into a pandas Series object
+        # The Series should have the standard pandas numeric index
+        # The Series values should be the string values from the "Name" column
+        # Assign the Series object to a "coasters" variable
+
+        coasters = pd.read_csv("roller_coasters.csv", usecols = ["Name"]).squeeze("columns")
+
+        # I only want to ride the top 3 roller coasters on the list.
+        # Starting with the "coasters" Series, extract the first 3 rows in a new Series.
+        # Assign the new Series to a "top_three" variable.
+
+        top_three = coasters.head(3)
+
+        # I'm now curious about some of the last entries on the coaster list.
+        # Starting with the "coasters" Series, extract the last 4 rows in a new Series.
+        # Assign the new Series to a "bottom_four" variable.
+    
+        bottom_four = coasters.tail(4)
+    
+    
+    
+# Passing Series to Python's Built-In Functions & sort_values method
+
+    google = pd.read_csv("google_stock_price.csv", usecols = ["Stock Price"]).squeeze("columns")
+    pokemon = pd.read_csv("pokemon.csv", usecols = ["Pokemon"]).squeeze("columns")
+    
+    # dir = lets you know list of attributes available with that object
+    dir(pokemon)
+    
+    # sorted = sorts the list
+    sorted(pokemon)
+    
+    #dict = key and values of the list
+    dict(pokemon)
+    
+    # Max and Min = Max returns last item in alphabet and min does first
+    max(pokemon)
+    min(pokemon)
+    
+    #sort_values - default ascending alphabet, lowest number
+    pokemon.sort_values()
+    
+    # Excercise 13
+    
+    
+        # Below, we have a list of delicious tortilla chip flavors
+        flavors = ["Spicy Sweet Chili", "Cool Ranch", "Nacho Cheese", "Salsa Verde"]
+
+        # Create a new Series object, passing in the flavors list defined above
+        # Assign it to a 'doritos' variable. The resulting Series should look like this:
+        #
+        #
+        #   0    Spicy Sweet Chili
+        #   1           Cool Ranch
+        #   2         Nacho Cheese
+        #   3          Salsa Verde
+        #   dtype: object
+
+        doritos = pd.Series(flavors)
+
+
+        # Below, sort the doritos Series in descending order.
+        # Assign the sorted a Series to a 'sorted_doritos' variable.
+        # The sorted Series should like this:
+        #
+        #   0    Spicy Sweet Chili
+        #   3          Salsa Verde
+        #   2         Nacho Cheese
+        #   1           Cool Ranch
+        #   dtype: object
+
+        sorted_doritos = doritos.sort_values(ascending = False)
+        
      
+     
+ # The sort_index Method
+     
+     # Same as before but with an index
+     pd.read_csv("pokemon", index_col = "Pokemon").squeeze()
+     pokemon.sort_index()
+ 
+        
+        
+    
+
+
