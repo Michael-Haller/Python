@@ -413,7 +413,7 @@
          
 # Extract Series Values by Index Position and Label
 
-    pokemon = pd.read_csv("pokemon", index_col = ["Pokemon"]).squeeze()
+    pokemon = pd.read_csv("pokemon", index_col = "Pokemon").squeeze()
     pokemon.head()
     
     # Return multiple items from the list
@@ -464,7 +464,164 @@
 # Get Method, Overwrite a Series Value, Copy Method, the Inplace Parameter, Math Methods on Series objects
 # Broadcasting, Use the value_counts Method to see Unique values within a series
 
-    #
+    pokemon = pd.read_csv("pokemon", index_col = "Pokemon").squeeze()
+    pokemon.head()
+    
+    # Both get same result which is Grass
+    pokemon.get(0)
+    pokemon.get("Bulbasaur")
+    
+    pokemon.get([5, 10])
+    pokemon.get(["Moltress", Meowth"])
+    
+    # if get can't find it, returns None as default
+    # You can make a return value different then None (see below)
+    pokemon.get("Digimon", "Nonexistent")
+    
+    # Same for list and index
+    pokemon.get(["Moltress", Meowth"], "Nonexistent")
+    pokemon.get([0, 500, 10000], "Nonexistent")
+    
+    # Overwrite example 
+    pokemon[0] = "Borisaur"
+    
+    # What if the line doesn't exist (adding line 1500 instead with only 721 lines)
+    # Just adds this to the end 
+    pokemon[1500] = "Hello"
+    
+    # Overwriting multiple
+    pokemon([1, 2, 4]) = ["Firemon", "Flameon", "Blazemon"]
+    
+    # What about an index column
+    pokemon = pd.read_csv("pokemon", index_col = "Pokemon").squeeze("columns")
+    pokemon.head()
+    
+    pokemon["Bulbasaur"] = "Awesomeon"
+    pokemon[1] = "Grassmon"
+    
+    # Copy Method
+    # Series and dataframe would both be changed when doing it this way when we don't want to
+    pokemon_df = pd.read_csv("pokemon.csv", usecols = ["Pokemon"])
+    pokemon_series = pokemon_df.squeeze("columns")
+    pokemon_series[0] = "Whatever"
+    pokemon_df
+    # big house = df
+    #   Door
+    #    Paint Red =
+    # We change the door but technically means the house has changed
+    
+    #Make an independent series
+    pokemon_df = pd.read_csv("pokemon.csv", usecols = ["Pokemon"])
+    pokemon_series = pokemon_df.squeeze("columns").copy()
+    
+    # Inplace Parameter
+    google = (pd.read_csv("google_stock_price.csv", usecols = ["Stock Price"]).squeeze("columns").copy())
+    
+    # Replacing/Overwrite the original google
+    google = google.sort_values()
+    
+    # where inplace parameter comes into play for overwrite
+    google.sort_values(inplace = True)
+    google.sort_index(inplace = True)
+    
+    # Math Methods
+    
+    google = pd.read_csv("google_stock_price.csv", usecols = ["Stock Price"]).squeeze("columns")
+    
+    # Count() = counts number of non-null series, does 3012
+    google.count()
+    google.mean()
+    google.sum()
+    google.product()
+    google.std()
+    google.min()
+    google.max()
+    google.median()
+    
+    # Describe() = gives you a whole series of statical analysis
+    google.describe()
+    
+    #Broadcasting
+    
+    google = pd.read_csv("google_stock_price.csv", usecols = ["Stock Price"]).squeeze("columns")
+    
+    # Adding 10 to every number in the Series
+    google + 10
+    
+    # The value_counts Methods  - counts unique values (grass type pokemon are more than one)
+    pokemon = pd.read_csv("pokemon", index_col = "Pokemon").squeeze("columns")
+    # Grass type answer is 66
+    pokemon.value_counts()
+    # Normalize = gives you the percentage of total
+    pokemon.value_counts(normalize = True)
+    
+            
+    # Excercise 16
+    
+        import pandas as pd
+        # We have a hot_dogs.csv CSV file with 2 columns: Year and Winner.
+        # The dataset stores the winner of the world-famous Nathan's Hot Dog Eating
+        # contest for each year since 1967. You can explore the data by clicking into 
+        # the CSV file on the left.
+        #
+        # Import the CSV file into a pandas Series object
+        # The Series should have the standard pandas numeric index
+        # The Series values should be the string values from the "Winner" column
+        # Assign the Series object to a "hot_dogs" variable
+
+        hot_dogs = pd.read_csv("hot_dogs.csv", usecols = ["Winner"], squeeze = True)
+
+        # I'm curious how many times each winner has won the hot dog-eating contest.
+        # Create a new Series that shows each person's name (index labels) 
+        # and the number of times they've won (the values). What method can
+        # help you generate this Series?
+        # Assign the Series to a "names_and_wins" variable.
+    
+        names_and_wins = hot_dogs.value_counts()
+    
+    
+# The Apply and Map Method  
+    
+    pokemon = pd.read_csv("pokemon", index_col = "Pokemon").squeeze("columns")
+    
+    #Run the len function to every row in a Series
+    
+    pokemon.apply(len)
+    
+    def rank_pokemon(pokemon_type):
+      if pokemon_type in ["Grass", "Fire", "Water"]:
+       return "Classic"
+      elif pokemon_type == "Normal":
+        return "Boring"
+      else: 
+        return "TBD"
+        
+    pokemon.apply(rank_pokemon)
+    
+    # Map Method - connect or associate to something else. Accepts an object instead of a function
+    
+    pokemon = pd.read_csv("pokemon", index_col = "Pokemon").squeeze("columns")
+    
+    mappings = {
+        "Grass": "Classic",
+        "Fire": "Classic",
+        "Water": "Classic",
+        "Normal": "Boring"
+    }
+    
+    pokemon.map(mappings)
+    
+    mapping_series = pd.Series(mappings)
+    mapping_series
+    pokemon.map(mappings_series)
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 
