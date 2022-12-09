@@ -711,10 +711,10 @@
         # "interesting_facts" variable.
         interesting_facts = chicken[["Locations", "Name", "Headquarters"]]
    
-   
+
+
 # Add a New Column, Add a New Column From Existing Column, Review of value_counts, and Drop Dataframe Rows With Null Values with dropna Method
 
-    #
     nba = pd.read_csv("nba.csv")
     nba
     
@@ -754,6 +754,172 @@
     # Remove any rows where the column "College" has a missing value
     
     nba.dropna(subset = ["College"])
+    
+    # Excercise 20
+         
+        # The data.csv file contains a dataset of random numbers.
+        # The dataset has 4 columns: A, B, C, and D.
+        # Import pandas and use it to parse the CSV.
+        # Assign the imported DataFrame to a variable called 'data'.
+       
+        import pandas as pd 
+        data = pd.read_csv("data.csv")
+
+
+        # Filter the dataset to remove rows where ALL the
+        # values are missing. Assign the resulting DataFrame
+        # to a "no_empty_rows" variable.
+        
+        no_empty_rows = data.dropna(how = "all")
+
+
+        # Filter the dataset to remove rows that have a missing value
+        # in either the "B" or "D" columns.
+        # Assign the resulting DataFrame to a "result" variable.
+        
+        result = data.dropna(subset = ["B", "D"])
+        
+  
+  
+  
+# Fill in the Missing Dataframe Values With The Fillna Method, Astype Method 1, Astype Method 2
+
+    nba = pd.read_csv("nba.csv").dropna{how = "all"}
+    nba
+    
+    # Fill any NaN with a zero
+    nba.fillna(0)
+    
+    # Fill any NaN value in a College column. NOTE these created a new series but not in the dataframe
+    nba["College"].fillna("Unknown")
+    
+    # Add a permanent change, use inplace method OR reassign it to itself
+    nba["College"].fillna("Unknown", inplace = True)
+    nba["College"] = nba["College"].fillna("Unknown")
+    #Another way example
+    nba["College"] = nba["College"].fillna(value = 0)
+    
+    # Astype Method
+    # NOTE even if there is one missing numeric value, pandas converts it to floating points
+    
+    # Tells you if you have any Nan values in set    
+    nba["Age"].hasnans
+    
+    # Convert Floats to Int (2 ways)
+    nba["Age"].astype("int")
+    nba["Age"].astype(int)
+    
+    # How to find the number of unique values in a column
+    nba["Position"].nunique()
+    
+    # Creates each unique value in a row at the bottom
+    nba["Position"].astype("category")
+    
+    # Excercise 21
+         
+        # Import the health.csv file and assign it to a 'health' variable.
+        # The resulting DataFrame will have 3 columns: Weight, Height, and Blood Type
+        # Convert the values in the Weight Series to strings and overwrite the original column
+        # Convert the values in the Height Series to integers and overwrite the original column
+        # Convert the values in the Blood Type Series to categories and overwrite the original column
+        
+        health = pd.read_csv("health.csv")
+        health["Weight"] = health["Weight"].astype(str)
+        health["Height"] = health["Height"].astype(int)
+        health["Blood Type"] = health["Blood Type"].astype("category")
+    
+    
+    
+# Sort Dataframe With Sort_Values Method 1 & 2
+
+    nba = pd.read_csv("nba.csv")
+    
+    # Sort by column "Name"
+    nba.sort_values("Name")
+    nba.sort_values(by = "Name")
+    nba.sort_values(by = "Name", ascending = True)
+    
+    # When Sorting, NaN is behind largest values, so how to cluster towards the front
+    nba.sort_values("Salary", na_positions = "first")
+    
+    # Sort by using more than one column
+    
+    nba = pd.read_csv("nba.csv").dropna(how = "all")
+    
+    # How to sort the teams and then the players by each team
+    nba.sort_values(by = ["Team", "Name"])
+    nba.sort_values(by = ["Team", "Name"], ascending = True)
+    
+    # How to sort the teams and then the players by each team in REVERSE
+    nba.sort_values(by = ["Team", "Name"], ascending = [True, False])
+    
+    nba.sort_values(by = ["Team", "Name"], ascending = [True, False])
+    
+    
+    # Excercise 22
+         
+        import pandas as pd 
+
+        # This challenge includes a s&p500.csv with 6 columns: 
+        # Symbol, Security, Sector, Industry, HQ, Founded
+        # Import the s&p500.csv DataFrame and assign it to
+        # a companies variable.
+        
+        companies = pd.read_csv("s&p500.csv")
+
+        # Sort the DataFrame by the values in the "Industry" column in ascending order
+        # Assign the new DataFrame to a "by_industry" variable.
+        
+        by_industry = companies.sort_values("Industry", ascending = True)
+
+        # Sort the DataFrame by the values in the "HQ" column in descending order
+        # Assign the new DataFrame to a "by_headquarters_descending" variable.
+        
+        by_headquarters_descending = companies.sort_values("HQ", ascending = False)
+
+        # Sort the DataFrame by two conditions:
+        #  - by the values in the "Sector" column in descending order
+        #  - THEN by the values in the "Security" column in ascending order
+        # Assign the new DataFrame to a 'by_sector_and_security' variable
+        
+        by_sector_descending = companies.sort_values(by = ["Sector", "Security"] ascending = [False, True])
+    
+    
+    
+ 
+# Sort DataFrame Index With The Rank Method & Rank Series Values With The Rank Method
+
+    nba = pd.read_csv("nba.csv").dropna(how = "all")
+           
+    # Want to organize by Index
+    nba.sort_index()
+    nba.sort_index(ascending = True)
+    
+    # How to assign the highest salary in our set to be ranked one
+    # First converting NaN's to 0
+    nba["Salary"] = nba["Salary"].fillna(0).astype("int")
+    
+    nba["Salary Rank"] =nba["Salary"].rank(ascending = False).astype("int")
+    nba.sort_values("Salary", ascending = False)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
