@@ -1076,7 +1076,7 @@
     mask = df["Team"].isin(["Legal", "Sales", "Product"])
     df[mask]
     
-    # Excercise 25
+    # Excercise 26
          
         import pandas as pd 
         # This challenge includes a billboard.csv dataset.
@@ -1107,9 +1107,57 @@
         # Assign the resulting DataFrame to a 'end_of_decade' DataFrame.
         target_years = billboard["Released"].isin([1979, 1989, 1999])
         end_of_decade = billboard[target_years]
+        
+        
+        
+# Check For Null and Present Dataframe Values With The Isnull and NotNull Method, and Check For Inclusion With The Between Method
     
+    # bool for looking at Null values
+    mask = df["Team"].isnull()
+    df[mask]
     
+    # NotNull is opposite
+    condition = df["Gender"].notnull()
+    df[condition]
     
+    # Find Between
+    df[df["Salary"].between(60000, 70000)]
+    df[df["Bonues %"].between(2.0, 5.0)]
+    df[df["Start Date"].between("1991-01-01", "1992-01-01")]
+    
+    # Excercise 27
+         
+        import pandas as pd 
+        # This challenge includes a billboard.csv dataset.
+        # It is a list of the top-selling albums of all time according to Billboard
+        # The dataset has 5 columns:
+        # Artist,Album,Released,Genre,Sales
+        # Import the billboard.csv fille into a DataFrame. 
+        # Assign the imported DataFrame to an 'billboard' variable.
+        weather = pd.read_csv("weather.csv", parse_dates = ["Day"])
+
+        # CHALLENGE 1
+        # Find all records with an Artist of either Michael Jackson,
+        # Whitney Houston, or Celine Dion. Assign the resulting 
+        # DataFrame to a "trios" DataFrame.
+        target_week = weather["Day"].between("04/15/2022", "04/22/2022")
+        week_of_weather = weather[target_week]
+
+        # CHALLENGE 2
+        # Find all records with Sales of either 25, 35, or 45
+        # million copies. Note that the 'Sales' column's integers
+        # reflect album sales in millions. Assign the resulting DataFrame
+        # to a 'fives' DataFrame
+        low_temp_target = weather["Low Temp"].between(30, 50)
+        cold_days = weather[low_temp_target]
+
+        # CHALLENGE 3
+        # Find all records released in either 1979, 1989, or 1999.
+        # Assign the resulting DataFrame to a 'end_of_decade' DataFrame.
+        high_temp_target = weather["High Temp"].between(50, 75)
+        warm_days = weather[high_temp_target]
+        
+        
     
     
     
