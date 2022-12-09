@@ -557,7 +557,7 @@
     pokemon.value_counts(normalize = True)
     
             
-    # Excercise 16
+    # Excercise 17
     
         import pandas as pd
         # We have a hot_dogs.csv CSV file with 2 columns: Year and Winner.
@@ -626,8 +626,144 @@
 
     nba = pd.read_csv("nba.csv")
     # Methods and Attributes between Series and Dataframes
+    # Have some similar traits
     
+    # Differences between Shared Methods
+    
+    revenue =pd.read_csv("revenue.csv", index_col = "Date")
+    revenue
+    
+    s = pd.Series ([1, 2, 3])
+    s.sum()
+    
+    #Sums every column versus the s
+    revenue.sum()
+    revenue.sum(axis = "index")
+    revenue.sum(axis = 0)
+    
+    
+    # How to sum a row
+    revenue.sum(axis = "columns")
+    revenue.sum(axis = 1)
+    
+    # Select one column from a dataframe
+    nba = pd.read_csv("nba.csv")
+    nba
+    
+    # dataframe is just a bunch of series glued together that share a common index
+    nba.Name 
+    type{nba.Name}
+    
+    nba["Name"].head(7).values
+    
+    # Excercise 18
+    
+        import pandas as pd
+        # This challenge includes a cruise_ships.csv with 4 columns: 
+        # Name, Operator, Year, and Tonnage
+        # Import the cruise_ships.csv DataFrame and assign it to
+        # a cruise_ships variable
 
+        cruise_ships = pd.read_csv("cruise_ships.csv")
+
+        # Extract the "Operator" column from the DataFrame
+        # and assign it to an "operators" variable.
+
+        operators = cruise_ships["Operator"]
+
+        # Extract the "Tonnage" column from the DataFrame
+        # and assign it to an "tonnages" variable.
+
+        tonnages = cruise_ships["Tonnage"]
+
+        # Extract the "Name" column from the DataFrame
+        # and assign it to an "cruise_names" variable.
+    
+        cruise_names = cruise_ships["Name"]
+        
+
+
+
+# Select two or more columns from a Dataframe
+
+    nba = pd.read_csv("nba.csv")
+    nba
+    
+    # Pull the name and teams columns
+    nba(["Name", "Team"])
+
+
+    # Excercise 19
+    
+        import pandas as pd
+        # This challenge includes a "chicken_restaurants.csv" dataset with 6 columns:
+        # Name, Original Location, Year, Headquarters, Locations, Areas Served
+        # Import the CSV into a DataFrame and assign it to a "chicken" variable.
+
+        chicken = pd.read_csv("chicken_restaurants.csv")
+
+        # Extract the "Year" and "Locations" columns (in that order) into
+        # their own DataFrame. Assign the DataFrame to a "years_and_locations" variable.
+        years_and_locations = chicken(["Year", "Locations"])
+        
+        # Extract the "Locations", "Name", and "Headquarters" columns (in that order)
+        # into their own DataFrame. Assign the DataFrame to a 
+        # "interesting_facts" variable.
+        interesting_facts = chicken[["Locations", "Name", "Headquarters"]]
+   
+   
+# Add a New Column, Add a New Column From Existing Column, Review of value_counts, and Drop Dataframe Rows With Null Values with dropna Method
+
+    #
+    nba = pd.read_csv("nba.csv")
+    nba
+    
+    # Add a column called Sport with value Basketball
+    nba["Sport"] = "Basketball
+    
+    # Insert between Number and Positions Column. the number below represents where it show be as in 3 column (fourth since we start at zero)
+    nba.insert(loc = 3, column = "Sport", value = "Basketball")
+    
+    # Create from an existing column
+    # Add 10 years to the age column
+    
+    nba["Age in a Decade"] = nba["Age"] + 10
+    nba["Age in a Decade"] = nba["Age"].add(10)
+    
+    # Review of value_counts
+    # Returns unique values in dataframes and how often
+    
+    nba.value_counts()
+    
+    # Most frequent positions
+    
+    nba["Positions"].value_counts()
+    
+    # Drop Rows With Null Values
+    # Marks missing values as NaN
+    
+    # Remove rows with a missing value in ANY part of the row
+    
+    nba.dropna()
+    nba.dropna(how = "any")
+    
+    # Now remove rows where it's ALL missing/null/NaN
+    
+    nba.dropna(how = "all")
+    
+    # Remove any rows where the column "College" has a missing value
+    
+    nba.dropna(subset = ["College"])
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
