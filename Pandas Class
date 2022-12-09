@@ -1158,6 +1158,143 @@
         warm_days = weather[high_temp_target]
         
         
+        
+# Check For Duplicate Dataframes Rows With The Duplicated Method, Delete Duplicate Dataframe Rows With The drop_duplicates Method, and Identify and Count Unique Values With The Unique and Nunique Methods 
+        
+    
+    df = pd.read_csv("employees.csv", parse_dates = ["Start Date", "Last Login Time"])
+    df["Senior Management"] = df["Senior Management"].astype("bool")
+    df["Gender"] = df["Gender"].astype("category")
+    df.sort_values("First Name", inplace = True)
+    
+    # Check For Duplicate Dataframes Rows With The Duplicated Method
+    
+    # Doesn't mark the first occurance as duplicate, but the rest will
+    df[df["First Name"].duplicated()]
+    
+    # Doesn't mark the last occurance as duplicate, but the rest will
+    df[df["First Name"].duplicated(keep = "last")]
+    
+    # Removes all duplicates
+    df[df["First Name"].duplicated(keep = False)]
+    
+    # ~ Keeps all unique names
+    mask = ~df["First Name"].duplicated(keep = False)
+    
+    # Drop_duplicates method
+    # Drops it if the whole rows is the same
+    
+    # keeps the first of the duplicates
+    df.drop_duplicates(subset = ["First Name"], keep = "first")
+    
+    # Removes all duplicates
+    df.drop_duplicates(subset = ["First Name"], keep = False)
+    
+    # Across mulitple rows essentially AND
+    df.drop_duplicates(subset = ["First Name","Team"])
+    
+    # Doesn't change original dataset unless
+    df.drop_duplicates(subset = ["First Name","Team"], inplace = True)
+    
+    # Unique and Nunique Methods
+    
+    df = pd.read_csv("employees.csv", parse_dates = ["Start Date", "Last Login Time"])
+    df["Senior Management"] = df["Senior Management"].astype("bool")
+    df.sort_values("First Name", inplace = True)
+    
+    # Shows all unique values
+    df["Gender"].unique()
+    
+    # Provides number of unique items
+    len(df["Gender"].unique())
+    
+    # Another way of doing above
+    # NOTE Nunique does not count null
+    df["Gender"].nunique()
+    
+    # Produces same value as len equation
+    df["Gender"].nunique(dropna = False)
+    
+ 
+ 
+ 
+############SECTION 4
+    
+    
+# Dataframes 3 Module & Ipmort Dataset
+
+    # Set_index & Reset_Index Methods
+    bond = pd.read_csv("jamesbond.csv"), index_col = "Film")
+    
+    # How to create a index for your dataframe
+    bond.set_index(keys = "Film"), inplace = True)
+    
+    # How to reset
+    bond.reset_index()
+    bond.reset_index(drop = True)
+    
+    # Back to Original
+    bond.reset_index(drop = False, inplace = True)
+    
+    # set_index replaces the index so here is how to keep it
+    bond.reset_index(inplace = True)
+    bond.set_index("Year", inplace = True)
+    
+    # Retrieve Rows by Index Label with .Loc Accessor
+    bond = pd.read_csv("jamesbond.csv"), index_col = "Film")
+    bond.sort_index(inplace = True)
+    
+    # Show the movies facts 
+    bond.loc["Goldfinger"]
+    bond.loc["GoldenEye"]
+    
+    # Can have duplicates, more than one returns a dataframe
+    bond.loc["Casino Royale"]
+    
+    #How to get part of a list and includes BOTH items
+    bond.loc["Diamonds Are Forever":"From Russia with Love"]
+    
+    # Can jump over rows with 2
+    bond.loc["Diamonds Are Forever":"From Russia with Love":2]
+    
+    # Retrieve Rows by Index Position with Iloc Accessor
+    # I in Iloc is Index
+    # Starts counting at zero
+    bond.iloc[0]
+    
+    # More than one row
+    bond.iloc[[15, 20]]    
+    
+    # Includes 4 but not row 8
+    bond.iloc[4:8]
+
+    # Second Arguements to Loc and Iloc Accessors
+    bond = pd.read_csv("jamesbond.csv"), index_col = "Film")
+    bond.sort_index(inplace = True)
+    
+    # Get the actor in the movie
+    bond.loc["Moonraker", "Actor"]
+    
+    # Provide multiple columns, this below gets director and box office from Moonraker
+    bond.loc["Moonraker", ["Director", "Box Office"]]
+    
+    #Same as above but now two movies
+    bond.loc[["Moonraker", "A View to a Kill"], ["Director", "Box Office"]]
+    
+    # all columns between
+    bond.loc[["Moonraker": "Thunderball"], ["Director":"Budget"]]  
+    
+    # Set New Value For a Specific Cell or Cells in a Row
+    
+
+    
+   
+   
+    
+    
+    
+    
+    
     
     
     
