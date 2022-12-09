@@ -907,6 +907,206 @@
     
     
     
+############SECTION 3   
+    
+    
+    
+    
+# Module's Dataset & Memory Optimization
+    
+    df = pd.read_csv("employees.csv", parse_dates = ["Start Date", "Last Login Time"])
+    df["Senior Management"] = df["Senior Management"].astype("bool")
+    df["Gender"] = df["Gnder"].astype("category")
+    
+
+    # Filter a Dataframe Based on a Condition
+    
+    # The first df would do boolean while the second df create a dataframe with the items that match
+    df[df["Gender"] == "Male"]
+    
+    # mask saves the boolean series that gets generated
+    mask = df["Team"] == "Finance"
+    df[mask]
+    
+    # If column has boolean just do this
+    df[df["Senior Management"]]
+    
+    # Not Equal
+    df["Team"] != "Marketing"
+    
+    # <= for dates mean prior to
+    
+    # Excercise 23
+         
+        import pandas as pd 
+
+        # This challenge includes a the_office.csv dataset.
+        # It is a listing of all episodes in the popular American sitcom The Office.
+        # The dataset has 7 columns:
+        # Season, Episode, Name, Director, Writer, Airdate, Viewership
+        # Import the the_office.csv fille into a DataFrame. 
+        # Tell pandas to parse the values in the Airdate column as datetime values.
+        # Finally, assign the imported DataFrame to an 'office' variable.
+        office = pd.read_csv("the_office.csv", parse_dates = ["Airdate"])
+
+
+        # CHALLENGE 1:
+        # Find all episodes with a Writer of "Greg Daniels"
+        # Assign the resulting DataFrame to a 'written_by_greg' variable.
+        written_by_greg = office[office["Writer"] == "Greg Daniels"]
+
+
+        # CHALLENGE 2:
+        # Find all episodes BEFORE season 8 (not including season 8)
+        # Assign the resulting DataFrame to a 'good_episodes' variable
+        good_episodes = office[office["Season"] < 8]
+
+
+        # CHALLENGE 3:
+        # Find all episodes that aired before 1/1/2008.
+        # Assign the resulting DataFrame to an 'early_episodes' variable.
+        early_episodes = office[office["Airdate"] < "1/1/2008"]
+ 
+ 
+# Filter With More Than One Condition (AND - &)
+
+    # AND OR
+    mask1 = df["Gender"] == "Male"
+    mask2 = df["Team"] == "Marketing"
+    
+    df[mask1 & mask2]
+    
+    # Excercise 24
+         
+        import pandas as pd 
+        # This challenge includes a the_office.csv dataset.
+        # It is a listing of all episodes in the popular American sitcom The Office.
+        # The dataset has 7 columns:
+        # Season, Episode, Name, Director, Writer, Airdate, Viewership
+        # Import the the_office.csv file into a DataFrame. 
+        # Tell pandas to parse the values in the Airdate column as datetime values.
+        # Finally, assign the imported DataFrame to an 'office' variable.
+        office = pd.read_csv("the_office.csv", parse_dates = ["Airdate"])
+
+
+        # CHALLENGE 1:
+        # Find all episodes with a Viewership greater than 10
+        # who are also directed by Jeffrey Blitz
+        # Assign the resulting DataFrame to a 'jeffs_episodes' variable.
+        good_viewership = office["Viewership"] > 10
+        directed_by_jeff = office["Director"] == "Jeffrey Blitz"
+        jeffs_episodes = office[good_viewership & directed_by_jeff]
+
+        # CHALLENGE 2:
+        # Find all episodes in season 5 that have an episode number
+        # greater than or equal to 13.
+        # Assign the resulting DataFrame to a "second_half_of_season_5" variable.
+        season_5 = office["Season"] == 5
+        episodes_13_and_up = office["Episode"] >= 13
+        second_half_of_season_5 = office[season_5 & episodes_13_and_up]
+
+        # CHALLENGE 3:
+        # Find all episodes that were the 6th episode of their season
+        # and also aired before 01/01/2010.
+        # Assign the resulting DataFrame to a "sixth_episodes_of_early_seasons" variable.
+        sixth_episodes = office["Episode"] == 6
+        desired_airdate = office["Airdate"] < "01/01/2010"
+        sixth_episodes_of_early_seasons = office[sixth_episodes & desired_airdate]
+        
+
+# Filter With More Than One Condition (OR - |)
+    
+    #
+    mask1 = df["Senior Management"]
+    mask2 = df["Start Date"] < "1990-01-01"
+    df[mask1 | mask2]
+    
+    # Can do multiple
+    df[(mask1 & mask2) | mask3]
+    
+    # Excercise 25
+         
+        import pandas as pd 
+        # This challenge includes a the_office.csv dataset.
+        # It is a listing of all episodes in the popular American sitcom The Office.
+        # The dataset has 7 columns:
+        # Season, Episode, Name, Director, Writer, Airdate, Viewership
+        # Import the the_office.csv file into a DataFrame. 
+        # Tell pandas to parse the values in the Airdate column as datetime values.
+        # Finally, assign the imported DataFrame to an 'office' variable.
+        office = pd.read_csv("the_office.csv", parse_dates = ["Airdate"])
+
+
+        # CHALLENGE 1:
+        # Find all episodes that were EITHER in Season 4
+        # OR directed by Harold Ramis
+        # Assign the resulting DataFrame to a 'season_4_or_harold' variable.
+        
+        season_4 = office["Episode"] == 4
+        harold = office["Director"] == "Harold Ramis"
+        season_4_or_harold = office[season_4 | harold]
+
+        # CHALLENGE 2:
+        # Find all episodes that EITHER had a Viewership less than 4
+        # OR aired on/after January 1st, 2013.
+        # Assign the resulting DataFrame to a 'low_viewership_or_later_airdate' variable.
+        
+        viewership = office["viewership"] < 4
+        airdate = office["Airdate"] >= "01-01-2013"
+        low_viewership_or_later_airdate = office[viewership | airdate]
+
+        # CHALLENGE 3:
+        # Find all episodes that EITHER the 9th episode of their season
+        # OR had an episode Name of "Niagara"
+        # Assign the resulting DataFrame to a 'ninth_or_niagara' variable.
+        ninth_episodes = office["Episode"] == 9
+        niagara = office["Name"] == "Niagara"
+        ninth_or_niagara = office[ninth_episodes | niagara]
+        
+        
+        
+# Check For Inclusion With The Isin Method
+
+    mask1 = df["Team"] == "Legal"
+    mask2 = df["Team"] == "Sales"
+    mask3 = df["Team"] == "Product"
+    df[mask1 | mask2 | mask3]
+    
+    # Runs to see if each term is in the row and return bool
+    mask = df["Team"].isin(["Legal", "Sales", "Product"])
+    df[mask]
+    
+    # Excercise 25
+         
+        import pandas as pd 
+        # This challenge includes a billboard.csv dataset.
+        # It is a list of the top-selling albums of all time according to Billboard
+        # The dataset has 5 columns:
+        # Artist,Album,Released,Genre,Sales
+        # Import the billboard.csv fille into a DataFrame. 
+        # Assign the imported DataFrame to an 'billboard' variable.
+        billboard = pd.read_csv("billboard.csv")
+
+        # CHALLENGE 1
+        # Find all records with an Artist of either Michael Jackson,
+        # Whitney Houston, or Celine Dion. Assign the resulting 
+        # DataFrame to a "trios" DataFrame.
+        target_artists = billboard["Artist"].isin(["Michael Jackson", "Whitney Houston", "Celine Dion"])
+        trios = billboard[target_artists]
+
+        # CHALLENGE 2
+        # Find all records with Sales of either 25, 35, or 45
+        # million copies. Note that the 'Sales' column's integers
+        # reflect album sales in millions. Assign the resulting DataFrame
+        # to a 'fives' DataFrame
+        target_sales = billboard["Sales"].isin([25, 35, 45])
+        fives = billboard[target_sales]
+
+        # CHALLENGE 3
+        # Find all records released in either 1979, 1989, or 1999.
+        # Assign the resulting DataFrame to a 'end_of_decade' DataFrame.
+        target_years = billboard["Released"].isin([1979, 1989, 1999])
+        end_of_decade = billboard[target_years]
     
     
     
