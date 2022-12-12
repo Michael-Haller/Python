@@ -1285,6 +1285,16 @@
     bond.loc[["Moonraker": "Thunderball"], ["Director":"Budget"]]  
     
     # Set New Value For a Specific Cell or Cells in a Row
+    # Type "=" after the determiner
+    # Example: Change Sean Connery to Sir Sean Connery
+    bond.loc["Dr. No", "Actor"] = "Sir Sean Connery"
+    bond.loc["Dr. No", ["Box Office", "Budget", "Bond Actor Salary"]] = [448000000, 7000000, 600000]
+    
+    # Set Mulitple Values in a Dataframe
+    actor = bond["Actor"] == "Sean Connery"
+    bond.loc[actor, "Actor"] = "Sir Sean Connery"
+    
+    # Raname Index Labels or Columns in a Dataframe
     
 
     
