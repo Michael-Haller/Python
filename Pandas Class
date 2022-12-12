@@ -1298,6 +1298,167 @@
     bond.rename(mapper = { "GoldenEye": "Golden Eye", "The World Is Not Enough: "Best Bond Movie Ever"}, axis = 0)
     bond.rename(index = { "GoldenEye": "Golden Eye", "The World Is Not Enough: "Best Bond Movie Ever"})
     
+    bond.rename(mapper = "Year": "Release Date", "Box Office": "Revenue"}, axis = 1)
+    bond.rename(mapper = "Year": "Release Date", "Box Office": "Revenue"}, axis = "columns")
+    bond.rename(columns = "Year": "Release Date", "Box Office": "Revenue"})
+    
+    # Make it permanent 
+    bond.rename({columns = "Year": "Release Date", "Box Office": "Revenue"}, inplace = True)
+    
+    # Change Columns Quicker
+    bond.columns = ["Year of Release", "Actor", "Director", "Cross", "Cost", "Salary"]
+    
+    # Delete Rows or Columns From a Dataframe
+    bond.drop({"A View to a Kill", "Die Another Day", "From Russia With Love"}, inplace = True)
+    
+    bond.drop("Box Office", axis = "columns")
+    
+    # Pop Method permanent and returns the series
+    actor = bond.pop("Actor")
+    
+    # Delete from Df
+    del bond("Director")
+    
+    # Create Random Sample With The Sample Method
+    # Produce five random rows
+    bond.sample(n = 5)
+    
+    # Want a perctanage of the list
+    bond.sample(frac = .25)
+    
+    # Extract 3 random columns
+    bond.sample(n = 3, axis = "columns")
+    
+    # Use Nsmallest / Nlargest Methods to Get Rows With Smallest/Largest Values
+    bond.sort_values("Box Office", ascending = False).head(3)
+    
+    # Gets 3 largest box office items
+    bond.nlargest(3, columns = "Box Office")
+    
+    # Get 2 smallest
+    bond.nsmallest(2, columns = "Box Office")
+    
+    # 8 Largest Budgets From Series
+    bond.["Box Office"].nlargest(8)
+    
+    # Filter With The Where Method
+    mask = bond["Actor"] == "Sean Connery"
+    bond[mask]
+    
+    #Returns all except the rows not true are turneed into NaN
+    bond.where(mask)
+    
+    bond.where(bond["Box Office"] > 800)
+    
+    # Filter a Dataframe With the Query Method
+    bond.query('Actor == "Sean Connery"')
+    
+    # Apply a functionto every Dataframe Row With The Apply Method
+    # Best Enjoyable and None
+    def good_movie(row):
+       actor = row[1]
+       budget = row[4]
+       
+       if actor == "Pierce Broanan":
+          return "The Best"
+       elif acotr == "Roger Moore" and budget > 40:
+          return "Enjoyable"
+       else:
+          return "I have no clue"
+          
+        bond.apply(good_movie, axis = "columns")
+        
+    # Create a copy of a Dataframe With The Copy Method
+    directors = bond["Director"].copy()
+    
+    directors["A View to a Kill"] = "Mister John Glen"
+    
+    
+    
+    
+############SECTION 5
+
+    # Working With Text Data
+    
+    chicago = pd.read_csv("chicago.csv)
+    chicago["Department"] = chicago["Department"].astype("category")
+    
+    # Common String Methods - Lower - Upper - Title - Len
+    # Have to type Str first
+    chicago["Name"].str.lower()
+    
+    # Excercise 28
+         
+        import pandas as pd 
+        # # This challenge includes a data.csv dataset.
+        # The dataset has 3 columns: Name, Title, Cryptocurrency
+        # Import the dataset and assign the DataFrame to a "data" variable.
+
+
+
+        # Unfortunately, some of the text data has been incorrectly exported.
+
+        # The strings in the Name column are all lowercased.
+        # Capitalize the names properly (so the first letter of the person's first and last names are uppercase)
+        # Then, overwrite the Name column with the new Series.
+        data["Name"] = data["Name"].str.title()
+
+        # Lowercase the strings in the Title column.
+        # Then, overwrite the Title column with the new Series.
+        data["Title"] = data["Title"].str.lower()
+
+        # Uppercase the strings in the Cryptocurrency column.
+        # Then, overwrite the Cryptocurrency column with the new Series.
+        data["Cryptocurrency"] = data["Cryptocurrency"].str.upper()
+        
+    # Use The Str.Replace Method to Replace All Occurances of Character With Another
+    # dropna(how = "all") = drops all NaN values
+    
+    chicago["Department"] = chicago["Department"].str.replace("MGMNT", "MANAGEMENT")
+    
+    # Filter a Dataframe Rows With Strings Methods
+    # Extract any rows where the word water is 
+    mask = chicago["Position Title"].str.lower().str.contains("water")
+    chicago[mask]
+    
+    # Extract any rows where the word Starts With water
+    chicago[chicago["Position Title"].str.lower().str.startswith("water")]
+    
+    # Extract any rows where the word Ends With IST
+    mask = chicago["Position Title"].str.lower().str.endswith("ist")
+    chicago[mask]
+    
+    # More String Methods - Strip, LStrip, RStrip
+    chicago["Name"] = chicago["Name"].str.lstrip()
+    
+    # Invoke String Methods on Dataframe Index and Columns
+    chicago.index = chicago.index.str.strip().str.title()
+    
+    chicago.columns = chicago.columns.str.upper()
+    
+    # Split Strings by Characters With The Str.String Method
+    chicago["Name"].str.split(",").str.get(0).str.title().vale_counts()
+    
+    chicago["Position Title"].str.split(" ").str.get(0).value_counts()
+    
+    # More Practice With The Str.Split Method of a Series
+    # Get First Names if They're Not The First Word
+    chicago["Name"].str.split(",").str.get(1).str.strip().str.split(" ").str.get(0)
+    
+    # Exploring the Expand and N Parameters of The Str.Split Method
+    # Adding First Name and Last Name Columns from splitting the data
+    chicago[["First Name", "Last Name"]] = chicago["Name"].str.split(",", expand  =  True)
+    
+    # n is splitting it n times and leaving the rest
+    chicago[["First Title Word", "Remaining Words"]] = chicago["Position Title"].str.split(",", expand  =  True, n = 1)
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 
