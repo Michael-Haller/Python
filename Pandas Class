@@ -1294,7 +1294,11 @@
     actor = bond["Actor"] == "Sean Connery"
     bond.loc[actor, "Actor"] = "Sir Sean Connery"
     
-    # Raname Index Labels or Columns in a Dataframe
+    # Rename Index Labels or Columns in a Dataframe
+    bond.rename(mapper = { "GoldenEye": "Golden Eye", "The World Is Not Enough: "Best Bond Movie Ever"}, axis = 0)
+    bond.rename(index = { "GoldenEye": "Golden Eye", "The World Is Not Enough: "Best Bond Movie Ever"})
+    
+    
     
 
     
