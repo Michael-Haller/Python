@@ -1459,6 +1459,150 @@
 
 
    # Create a MultiIndex on a Dataframe With The Set_Index Method
+   
+   bigmac = pd.read_csv("bigmac.csv", parse_dates = ["Date"])
+   
+   bigmac.set_index(Keys = ["Date", "Country"], inplace = True)
+   
+   #Starts sorting on outmost layer
+   bigmac.sort_index()
+   
+   #
+   bigmac.index.names
+   
+   
+   # Excercise 29
+         
+        import pandas as pd 
+        # This challenge includes a subway_locations.csv dataset.
+        # It is a listing of all US locations of the Subway fast food restaurant chain.
+        # The dataset has 4 columns:
+        # city,state,latitude,longitude
+        # Import the subway_locations.csv file into a DataFrame. 
+        # Assign the imported DataFrame to a 'subway' variable.
+        subway = pd.read_csv("subway_locations.csv")
+
+        # CHALLENGE 1:
+        # Create a MultiIndex with the levels coming from the 'state' and 'city' columns (in that order)
+        # Assign the resulting DataFrame to a 'multi_df' variable.
+        # Do not mutate the original DataFrame.
+        multi_df = subway.set_index(["state", "city"])
+
+        # CHALLENGE 2:
+        # Using your MultiIndex DataFrame, sort the index by both levels' values
+        # Assign the resulting DataFrame to a 'sorted_multi_df' variable.
+        # Do not mutate any previous DataFrames.
+        sorted_multi_df = multi_df.sort_index()
+        
+        
+        # Extract Index Level Values With The Get_Level_Values Methods
+        
+        #Another way to create another a multi-index 
+        bigmac = pd.read_csv("bigmac.csv", parse_dates = ["Date"], index_col = ["Date", "Country"])
+        bigmac.sort_index(inplace = True)
+        
+        # Accepts name or index position of items you want
+        bigmac.index.get_level_values("Date")
+        bigmac.index.get_level_values(0)
+        
+        # Excercise 30
+         
+        import pandas as pd 
+        # This challenge includes a subway_locations.csv dataset.
+        # It is a listing of all US locations of the Subway fast food restaurant chain.
+        # The dataset has 4 columns:
+        # city,state,latitude,longitude
+        
+        # CHALLENGE 1:
+        # Import the subway_locations.csv file into a DataFrame. 
+        # Create a MultiIndex with the levels coming from the 'state' and 'city' columns (in that order)
+        # Sort the index (all columns must be sorted) and assign the resulting DataFrame to a 'subway' variable.
+        subway = pd.read_csv("subway_locations.csv", index_col = ["state", "city"]).sort_index()
+
+        # CHALLENGE 2:
+        # Using your DataFrame, access the Index holding the values from 
+        # the 'city' level. Assign the Index to a `city_index` variable.
+        city_index = subway.index.get_level_values("city")
+        city_index = subway.index.get_level_values(1)
+        
+        
+        # CHALLENGE 3:
+        # Using your DataFrame, access the Index holding the values from 
+        # the 'state' level. Assign the Index to a `state_index` variable.
+        state_index = subway.index.get_level_values("state")
+        state_index = subway.index.get_level_values(0)
+        
+        
+        
+        # Change Index Level Name With Set_Names Method, Sort_Index Method on MultiIndex, & Extract Rows From a MultiIndex Dataframe
+        # Change Index Level Name With Set_Names
+        bigmac.index.set_names(names("Day", "Location"), inplace = True)
+        
+        # If you want to keep existing name while changing just one item
+        bigmac.index.set_names(name = "Date", level = 0)
+        bigmac.index.set_names(name = "Date", level = "Day")
+        
+        # Sort_index Method on MutliIndex 
+        bigmac = pd.read_csv("bigmac.csv", parse_dates = ["Date"], index_col = ["Date", "Country"])
+        
+        # Can sort by multiple columns
+        bigmac.sort_index(ascending = [False, True], inplace = True)
+        
+        # Sorting by date
+        bigmac.sort_index(level = 0)
+        bigmac.sort_index(level = "Date")
+        
+        # Extract a Row From a MultiIndex Dataframe
+        bigmac.loc["2010-01-01", "Argentina"]
+        bigmac.loc["2010-01-01", "Prince in US Dollars"]
+        
+        bigmac.loc[("2010-01-01", "Argentina"), "Price in US Dollars"]
+        
+        bigmac.iloc[0]
+        
+        
+        # Excercise 31
+         
+        import pandas as pd 
+        # This challenge includes a subway_locations.csv dataset.
+        # It is a listing of all US locations of the Subway fast food restaurant chain.
+        # The dataset has 4 columns:
+        # city,state,latitude,longitude
+        
+        # CHALLENGE 1:
+        # Import the subway_locations.csv file into a DataFrame. 
+        # Use the 'index_col' parameter to attach a MultiIndex with levels
+        # coming from the 'state' and 'city' columns (in that order)
+        # Sort the DataFrame by both index levels (in regular ascending order)
+        # Assign the resulting DataFrame to a 'subway' variable.
+        subway = pd.read_csv("subway_locations.csv", index_col = ["state", "city"]).sort_index()
+
+        # CHALLENGE 2:
+        # Extract the row(s) with a 'state' level value of 'OK' and a
+        # 'city' level value of 'Broken Arrow'. Assign the result to a
+        # 'broken_arrow' variable.
+        broken_arrow = subway.loc[("OK", "Broken Arrow")]
+
+
+        # CHALLENGE 3:
+        # Extract the row(s) with a 'state' level value of 'FL' and a
+        # 'city' level value of 'Winter Park'. Assign the result to a
+        # 'winter_park' variable.
+        winter_park = subway.loc[("FL", "Winter Park")]
+        
+        # The Transpose Method on MultiIndex, Swaplevel Method, Unstack Methods, Pivot Method, Pivot_Table Method to Create Agggregate Summary, Use pd_Melt Method to Create a Narrow Dataset
+        # Transpose Method
+        
+        
+        
+
+
+    
+
+   
+   
+   
+   
     
     
     
