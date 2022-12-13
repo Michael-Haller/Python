@@ -1505,6 +1505,7 @@
         bigmac.index.get_level_values("Date")
         bigmac.index.get_level_values(0)
         
+        
         # Excercise 30
          
         import pandas as pd 
@@ -1561,6 +1562,8 @@
         bigmac.iloc[0]
         
         
+        
+        
         # Excercise 31
          
         import pandas as pd 
@@ -1590,8 +1593,361 @@
         # 'winter_park' variable.
         winter_park = subway.loc[("FL", "Winter Park")]
         
+        
+        
         # The Transpose Method on MultiIndex, Swaplevel Method, Unstack Methods, Pivot Method, Pivot_Table Method to Create Agggregate Summary, Use pd_Melt Method to Create a Narrow Dataset
-        # Transpose Method
+        # Transpose Method - Swaps row headers and column headers
+        bigmac = bigmac.transpose()
+        
+        # Transpose difference
+        bigmac.loc[("Price in US Dollars",), ("2010-01-01", "Sri Lanka")]
+        
+        # List From Sri Lanka to Ukraine
+        bigmac.loc[("Price in US Dollars",), ("2010-01-01", "Sri Lanka"):("2010-01-01", "Ukraine")]
+        
+        # Swaplevel Method
+        # Move two index levels. NOTE: If you only have two levels, do not need to provide more
+        bigmac.swaplevel()
+        
+        # If you have 3 levels for example. NOTE: order doesn't matter
+        bigmac.swaplevel("Date", "Country")
+        bigmac.swaplevel(0, 1)
+        
+        # Stack Method
+        # Takes Columns index and moves to main index on the left
+        # Doubled the rows and halved the columns
+        world = pd.read_csv("worldstats.csv", index_col = ["country", "year"])
+        world.stack()
+        
+        # Convert to Dataframe
+        world.stack().to_frame()
+        
+        # Unstack Method - does the opposite
+        s = world.stack()
+        s.unstack().unstack()
+        
+        # Part 2
+        s = world.stack()
+        # Can provide Index Number negative is from the back of the line
+        s.unstack(-1)
+        s.unstack(2)
+        s.unstack("year")
+        
+        # Part 3 do Year and then Country or index1 and index0
+        s.unstack(level = [1, 0])
+        s.unstack(level = ["year", "country"])
+        
+        # Pivot Method - Reorient data
+        sales = pd.read_csv("salesmen.csv", parse_dates = ["Date"])
+        sales["Salesman"] = sales["Salesman"].astype("category")
+        
+        sales.pivot(index = "Date", columns = "Salesman", values = "Revenue")
+        
+        # Pivot_Table Method -this is like Excel
+        foods = pd.read_csv("foods.csv")
+        foods.pivot_table(values = "Spend", index = ["Gender", "Item"], columns = ["Frequency", "City"], aggfunc = "mean")
+        
+        # pd.Melt - Opposite of a pivot method
+        sales = pd.read_csv("quarters.csv")
+        pd.melt(sales, id_vars = "Salesman", var_name = "Quarter", value_name = "Revenue")
+        
+        
+        
+        # Excercise 32
+         
+        import pandas as pd 
+        # This challenge includes a weather.csv dataset.
+        # It is a listing of temperatures across 4 seasons in several cities
+        # The dataset has 4 columns: City,Fall,Winter,Spring,Summer
+        # Notice that the Fall, Winter, Spring, and Summer columns are storing
+        # the same data point -- the temperature. This makes them good candidates
+        # for melting into a single column.
+        # Import the weather.csv file into a DataFrame. 
+        # Assign the imported DataFrame to a 'weather' variable.
+        weather = pd.read_csv("weather.csv")
+
+        # CHALLENGE 1:
+        # Create a new DataFrame using the 'weather' DataFrame by 'melting'
+        # the season columns' values into a single one. The 4 Season values
+        # should be stored in a column called 'Season'. The temperature
+        # values should be stored in a column called 'Temperature'.
+        # Your goal is a DataFrame that looks like this:
+        # 
+        # City	    Season	 Temperature
+        # London	Fall	 68
+        # London	Winter	 94
+        # London	Spring	 103
+        # London	Summer	 21
+        # Paris	    Fall	 46
+        # Paris	    Winter	 86
+        # Paris	    Spring	 26
+        # Paris	    Summer	 70
+        # ... more rows
+        #
+        # Assign this DataFrame to a 'melted' variable
+        melted = pd.melt(weather, id_vars = "City", var_name = "Season", value_name = "Temperature")
+        
+        
+        
+        
+############SECTION 7        
+        
+        # GroupBy Module - create from df and creats groupings based on values that are similar
+                
+        fortune = pd.read_csv("fortune1000.csv", index_col = "Rank")
+        sectors = fortune.groupby("Sector")
+        
+        # Usually want to group in a column with duplicate values
+        sectors = fortune.groupby("Sector")
+        
+        # First Operations With GroupBy Object
+        # len with secotrs does unique gorupings
+        len(sectors)
+        fortune["Sector"].nunique()
+        
+        sectors.size()
+        fortune["Sector"].value_counts()
+        
+        # Extracts first row from each groupings
+        sectors.first()
+        
+        # Groups - Give Python Dictionary with keys, each key values represent which rows deal with that group
+        sectors.groups
+       
+       
+        # Retrieve a Group With The Get_Group Method
+        sectors.get_group("Energy")
+        fortune[fortune["Sector"] == "Energy"]
+        
+        # Methods on Groupby Object and Dataframe Columns
+        # Max = Looks at left most and latest alphabetical
+        sectors.max()
+        
+        sectors["Revenue"].sum()
+        
+        # Grouping by Multiple Columns
+        fortune = pd.read_csv("fortune1000.csv", index_col = "Rank")
+        sectors = fortune.groupby("Sector", "Industry")
+        
+        #Same as before but now shows each industry under each sector
+        sectors.size()
+        
+        # The Agg Method
+        sectors.agg({"Revenue" : "sum",
+                     "Profits" : "sum",
+                     "Employees" : "mean"})
+        
+        # Now a List             
+        sectors.agg(["size", "sum", "mean"])   
+        
+        # Iterating Through Groups
+        # Shows Highest revenues in each group
+        df = pd.DataFrame(columns = fortune.columns)
+        for sector, data in sectors:
+            highest_revenue_company_in_group = data.nlargest(1, "Revenue")
+            df.append(highest_revenue_company_in_group)
+        
+        cities = fortunes.groupby("Location")
+        df = pd.DataFrame(columns = fortune.columns)
+        for city, data in cities:
+            highest_revenue_in_city = data.nlargest(1, "Revenue")
+            df = df.append(highest_revenue_in_city)
+        
+        
+        
+        
+############SECTION 8 
+        
+        # Merging, Joining, and Concatenating 
+        
+        week1 = pd.read_csv("Restaurant - Week 1 Sales.csv")
+        week2 = pd.read_csv("Restaurant - Week 2 Sales.csv")
+        customers = pd.read_csv("Restaurant - Customers.csv")
+        foods = pd.read_csv("Restaurant - Foods.csv")
+        
+        # The pd.Concat Method Part 1
+        # Combine week 1 and 2 (they have same column sames)
+        pd.concat(objs = [week1, week2])
+        
+        # Makes Index at the end 500 instead of 250 in the example
+        pd.concat(objs = [week1, week2], ignore_index = True)
+        
+        # Append - adds element at end
+        week1.append(other = week2, ignore_index = True)
+        
+        # Part 2
+        pd.concat(objs = [week1, week2], ignore_index = True)
+        
+        # Not lose positions but keep the identifier
+        pd.concat(objs = [week1, week2], keys = ["Week 1", "Week 2"])
+        
+        sales.loc[("Week 1",)]
+        sales.loc[("Week 1", 240)]
+        sales.loc[("Week 1", 240), "Customer ID"]
+        
+        # Inner Joins Part 1 - Merges two database with similar database
+        # Suffixes gives the columns not merged get names
+        week1.merge(week2, how = "inner", on = "Customer ID", suffixes = [" - Week 1", " - Week2"])
+        
+        # Inner Joins Part 2
+        week1.merge(week2, how = "inner", on = ["Customer ID", "Food ID"])
+        
+        week1[week1["Customer ID"] == 578]
+        
+        # Outer Joins
+        
+        week1.merge(week2, how = "outer", on = "Customer ID", suffixes = [" - Week 1", " - Week 2"])
+        
+        # NaN values when customer didn't come in a certain week
+        # Indicator tells us if the value was found in the left, right or both tables
+        merged = week1.merge(week2, how = "outer", on = "Customer ID", suffixes = [" - Week 1", " - Week 2"], indicator = True)
+        merged["_merge"].value_counts()
+        # Cut out "Both"
+        merged["_merged"].isin(["left_only", "right_only"])
+        merged[mask]
+        
+        # Left Joins
+        # Sort does sort by values pulled from the right
+        week1.merge(foods, how = "left", on = "Food ID", sort = True)
+        
+        # The Left_on and Right_on Parameters
+        # What if the names are not the same
+        week2.merge(customers, how = "left", left_on = "Customer ID", right_on = "ID", sort = True).drop("ID", axis = "columns")
+        
+        # Merging by Indexes With The Left_Index and Right_Index Parameters
+        week1.merge(customers, how = "left", left_on = "Customer ID", right_index = True)
+        
+        week1.merge(week2, how = "left", left_index = True, right_index = True, suffixes = " - Week 1", " - Week 2")
+        
+        # The Join() Method like append on the other axis
+        
+        week1 = pd.read_csv("Restaurant - Week 1 Sales.csv")
+        week2 = pd.read_csv("Restaurant - Week 2 Sales.csv")
+        customers = pd.read_csv("Restaurant - Customers.csv")
+        foods = pd.read_csv("Restaurant - Foods.csv")
+        satisfaction = pd.read_csv("Restaurant - Week 1 Satisfaction.csv")
+        
+        week1.merge(satisfaction, how = "left", left_index = True, right_index = True)
+        week1.join(satisfaction)
+        
+        # The Pd.Merge() Method - an Alternate syntax
+        
+        pd.merge(week1, customers, how = "left", left_on = "Customer ID", right_on = "ID")
+        
+        
+        
+############SECTION 9
+
+        # Working With Dates and Times in Datasets
+        import pandas as pd
+        import datetime as dt
+        
+        # Python's Datetime Module
+        someday = dt.date(2010, 1, 20)
+        someday.year
+        someday.month
+        someday.day
+        # Last 3: Hour, Minute, Seconds
+        someday = dt.date(2010, 1, 20, 8, 30, 57)
+        
+        # The Pandas Timestamp Object
+        pd.Timestamp("2015-03-31")
+        pd.Timestamp("2015/03/31")
+        pd.Timestamp("2015, 03, 31")
+        pd.Timestamp("03/31/2015")
+        pd.Timestamp("31/03/2015")
+        # Can't do month, day, year if the day is below 12
+        
+        
+        # The Pandas DateTimeIndex Object
+        dates = ["2016-01-02", "2016-04-12", "2009-09-07"]
+        dtIndex = pd.DatetimeIndex(dates)
+        
+        values = [100, 200, 300]
+        pd.Series(data = values, index = dtIndex)
+        
+        # The Pd.To_DateTime() Method
+        
+        pd.to_datetime("2001-04-19")
+        pd.to_datetime(dt.date(2001, 4, 19)
+        pd.to_datetime(["2015-01-03", "2014/02/08", "July 4th, 1996"])
+        
+        times = pd.Series(["2015-01-03", "2014/02/08", "July 4th, 1996"]
+        pd.to_datetime(times)
+        
+        # If something is in the time series which is not time use error = "coerce" which produces NaT
+        pd.to_datetime(dates, error = "coerce")
+        
+        # Create Range of Dates With The pd.Date_range() Method Part 1
+        times = pd.date_range(start = "2016-01-01", end = "2016-01-10", freq = "D")
+        # Below = 2016-01-01
+        times[0] 
+        
+        # Can change increments by adding a number in front of D
+        times = pd.date_range(start = "2016-01-01", end = "2016-01-10", freq = "5D")
+        # B = business days, W = Week, "W-" = What day of the week to start, H = Hour, M = Month, MS = Month Start
+        # A = Last day of each year
+        
+        # Part 2
+        # Generate number of periods. Example below creates 25 time periods
+        pd.date_range(Start = "2012-09-09", periods = 25, freq = "D")
+        
+        # Part 3
+        # How to count backwards. Use End only
+        pd.date_ranges(end = "1999-12-31", periods = 20, freq = "D")
+        
+        # .DT Accessor
+        bunch_of_dates = pd.date_range(start = "2000-01-01", end = "2010-12-31, freq = "24D")
+        s = pd.Series(bunch_of_dates)
+        s.dt.day
+        s.dt.month
+        s.dt.weekday_name
+        
+        # booleans work here too
+        mask = s.dt.is_quarter_start
+        s[mask]
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
