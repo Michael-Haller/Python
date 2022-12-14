@@ -1979,15 +1979,138 @@
 
 ############SECTION 10
 
-        # Input And Output 
+        # Pass an URL to the pd.read_csv Method
+        url = "https://data.cityofnewyork.us/api/views/25th-nujf/rows.csv"
+        baby_names = pd.read_csv(url)
+        
+        # Quick Object Conversions
+        # Go from pandas to another source
+        baby_names["Child's First Name"].tolist()
+        baby_names["Child's First Name"].to_dict()
+        
+        # Want them sorted alphabetically, remove duplicates, and properly capitalized
+        ", ".join(baby_names["Child's First Name"].str.title().drop_duplicates().sort_values())
+        
+        # Export CSV File with the to_csv Method
+        # Avoid spaces and use .csv at the end
+        # Utf-8 accepts many other letters
+        baby_names.to_csv("NYC_Baby_Names.csv", index = False, columns = ["Gender", "Ethnicity", "Child's First Name"], encoding = "utf-8"
+        
+        # Install Xlrd and Openpyxl
+        # Inmport Excel File into Pandas With The Read_Excel Method
+        df = pd.read_excel("Data - Single Worksheet.xlsx")
+        
+        # Will always pull the first worksheet
+        pd.read_excel("Data - Multiple Worksheet.xlsx", sheet_name = 0)
+        pd.read_excel("Data - Multiple Worksheet.xlsx", sheet_name = "Data 1")
+        
+        # Import Muliple Worksheets
+        # NOTE Excel does not come in as a Dataframe but rather a Dictionary
+        data = pd.read_excel("Data - Multiple Worksheet.xlsx", sheet_name = [0,1])
+        
+        # Import Everything
+        data = pd.read_excel("Data - Multiple Worksheet.xlsx", sheet_name = None)
+        
+        # Export Excel File
+        girls = baby_names[baby_names["Gender"] == "FEMALE"]
+        boys = baby_names[baby_names["Gender"] == "MALE"]
+        
+        excel_file = pd.ExcelWriter("Baby_Names.xlsx")
+        girls.to_excel(excel_file, sheet_name = "Girls", index = False)
+        boys.to_excel(excel_file, sheet_name = "Boys", index = False, columns = ["Year of Birth", "Gender", "Ethnicity"])
+        excel_file.save()
         
         
         
         
+############SECTION 11
+
+        # Visualizations
+        
+        from panadas_datareader import data
+        import.matplotlib.pyplot as plt
+        %matploblib inline
+              
+        # Use a Plot Method to Render a Line Chart
+        bb = data.DataReader(name = "BB", data_source = "yahoo", start = "2007-01-01", end = "2020-12-31")
+        bb.plot()
+        
+        # Target a specific column
+        bb.plot(y = "High")
+        bb["High"].plot()
+        
+        # Plot Multiple Columns
+        bb["High", "Close"].plot()
+        
+        # Modifying Plot Aesthetics with MatPlotLib Templates
+        # Returns theme of colors which you can choose from
+        plt.style.available
+        plt.style.use("fivethrityeight")
+        
+        # Creating Bar Graphs to Show Counts
+        def rank_performance(stock_price):
+            if stock_price <= 10:
+                returns "Poor"
+            elif stock_price <= 50:
+                returns "Satisfactory"
+            else:
+                returns "Stellar"
+                
+                
+        # Kind does Line, Bar horizontal or Bar    
+        bb["Close"].apply(rank_performance).value_counts().plot(kind = "barh")
+        
+        # Creating Pie Charts to Represent Proportions
+        bb["Close"].mean()
+        
+        def rank_performance(stock_price):
+            if stock_price >= bb["Close"].mean():
+                returns "Above Average"
+            else:
+                returns "Below Average"
+                
+        bb["Close"].apply(rank_performance).value_counts().plot(kind = "pie", legend = True)        
         
         
+############SECTION 12        
         
+        # Options And Settings 
         
+        import numpy as np
+        
+        # Changing Options With Attributes and Dot Syntax
+        
+        data = np.random.randint(0, 100, [1000, 50])
+        df = pd.DataFrame(data)
+        
+        # Shows how many rows it displays
+        pd.options.display.max_rows
+        df
+        # Shows how many columns it displays
+        pd.options.display.max_columns
+        
+        # Changing Pandas Options With Methods
+        
+        # Get_Option() = Gives the option name who you want to access
+        pd.get_option("max_rows")
+        
+        # Set_Option() = What you want to change and to what amount
+        pd.set_option("max_rows", 16)
+        
+        # Reset_Options() = Return to Default
+        pd.reset_option("max_rows")
+        
+        # Describe_Options() = describes what you're looking at and provides default & current value
+        pd.describe_option("max_rows")
+        pd.describe_option("max_rows")
+        
+        # The Percision Option = Tells you the number of numbers after the decimal
+        df = pd.DataFrame(np.random.randn(5, 5))
+        df
+        pd.get_option("percision")
+        
+        # Change the rounding to 2 points
+        pd.set_option("percision", 2)
         
         
         
