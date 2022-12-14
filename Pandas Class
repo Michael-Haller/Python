@@ -1907,6 +1907,92 @@
         mask = s.dt.is_quarter_start
         s[mask]
         
+        # Selecting Rows From a Dataframe with DateTimeIndex
+        #Example code below
+        stocks = data.DataReader(name = "MSFT", data_source = "yahoo", start = "2010-01-01", end = "2020-12-31")
+        
+        # index label
+        stocks.loc[pd.Timestamp("2010-01-04")]
+        
+        # index position = negative goes backwards
+        stocks.iloc[0]
+        
+        # Multiple positions. NOTE: Iloc is exclusive when you do number : number (ex: 100:102 will not show 102)
+        stocks.loc[[pd.Timestamp("2010-01-04"), pd.Timestamp("2010-01-05")]]
+        stocks.iloc[[10, 20, 30]]
+        
+        # In between
+        stocks.loc["2013-10-01":"2013-10-07"]
+        
+        # Trumcate = from one label to another
+        stocks.trumcate(before = "2013-10-01", after = "2013-10-07")
+        
+        # DateOffset - takes into consideration the leap years
+        birthdays = pd.date_range(start = "1991-04-12", end = "2020-12-31", freq = pd.DateOffset(years = 1))
+        birthday_stocks = stocks.index.isin(birthdays)
+        stocks[birthday_stocks]
+        
+        # Timestamp Object Attributes Qnd Methods
+        
+        someday = stocks.index[500]
+        
+        # Month_name - provides month of the timestamp in a str
+        someday.month_name()
+        
+        # Day_name() - same as month name but with day
+        someday.day_name()
+        
+        # Calls on all
+        stocks.index.day_name()
+        
+        # Insert() = inserts new columns
+        stocks.insert(0, "Day of Week", stocks.index.day_name())
+        stocks.insert(1, "Is Start of Month", stocks.index.is_month_start)
+        
+        # DateOffSet Object - qadd or subtract from every date
+        # Add 5 days. Also works the same for Months, Years, Hours, Mintues, Seconds
+        stocks.index + pd.DateOffset(days = 5)
+        
+        # Timeseries Offsets
+        # Add a dynamic amount to each day time. What if you wanted to round to the end of the month
+        # NOTE Running the MonthEnd() below would for example would push April 30th to May 311 since it's the end of the month alreayd
+        stocks.index + pd.tseries.offsets.MonthEnd()
+        stocks.index + pd.tseries.offsets.MonthBegin()
+        
+        # The TimeDelta Object = represents a TIME SPAN
+        time_a = pd.Timestamp["2020-03-31 04:35:16PM"]
+        time_b = pd.Timestamp["2020-03-20 02:15:49AM"]
+        # Produces Timedelta('11 days 00:00:00')
+        time_a - time_b
+        
+        # Can do Strs too and Months, Years, Minutes, etc.
+        pd.timedelta(days = 3)
+        
+        # TimeDeltas in a Dataset
+        
+        shipping = pd.read_csv("ecommerce.csv", index_col = "ID", parse_dates = ["order_date", "delivery_date"])
+        
+        shipping["Delivery Time"] = shipping["delivery_date"] - shipping["order_date"]
+        shipping["Twice As Long"] = shipping["delivery_date"] + shipping["Delivery Time"]
+        
+
+
+############SECTION 10
+
+        # Input And Output 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
